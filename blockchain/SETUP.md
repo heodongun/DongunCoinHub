@@ -244,5 +244,5 @@ function unpause()
 
 다음 단계:
 1. 프로젝트 루트로 이동: `cd ..`
-2. 전체 시스템 실행: `./run.sh` 또는 `docker-compose up -d`
+2. 전체 시스템 실행: `./scripts/run.sh` 또는 `docker-compose up -d`
 3. 브라우저에서 접속: http://localhost:3000

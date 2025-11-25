@@ -578,7 +578,7 @@ cd backend
 ./gradlew test
 
 # 통합 테스트
-./test.sh
+./scripts/test.sh
 ```
 
 ---

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # DongunCoinHub 실행 스크립트
-# Usage: ./run.sh
+# Usage: ./scripts/run.sh
 
 set -e
 
@@ -140,8 +140,8 @@ echo -e "   서비스 중지:   ${YELLOW}docker-compose down${NC}"
 echo -e "   서비스 재시작: ${YELLOW}docker-compose restart${NC}"
 echo ""
 echo -e "${BLUE}📚 문서:${NC}"
-echo -e "   빠른 시작: ${YELLOW}cat QUICKSTART.md${NC}"
-echo -e "   배포 가이드: ${YELLOW}cat DEPLOYMENT.md${NC}"
+echo -e "   빠른 시작: ${YELLOW}cat docs/QUICKSTART.md${NC}"
+echo -e "   배포 가이드: ${YELLOW}cat docs/DEPLOYMENT.md${NC}"
 echo ""
 echo -e "${GREEN}========================================${NC}"
 echo ""

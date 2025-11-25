@@ -23,7 +23,7 @@ help:
 # 초기 설정
 setup:
 	@echo "🚀 프로젝트 초기 설정 시작..."
-	./setup.sh
+	./scripts/setup.sh
 
 # 의존성 설치
 install:

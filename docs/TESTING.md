@@ -40,8 +40,8 @@
 - ✅ README.md - 프로젝트 문서
 - ✅ TESTING.md - 테스트 가이드 (이 파일)
 - ✅ Makefile - 빌드 및 실행 명령어
-- ✅ setup.sh - 초기 설정 스크립트
-- ✅ test.sh - 통합 테스트 스크립트
+- ✅ scripts/setup.sh - 초기 설정 스크립트
+- ✅ scripts/test.sh - 통합 테스트 스크립트
 
 ### Database
 - ✅ database/init.sql - PostgreSQL 초기화 스크립트
@@ -74,7 +74,7 @@
 
 ```bash
 # 전체 통합 테스트
-./test.sh
+./scripts/test.sh
 
 # 성공 시 출력:
 # ═══════════════════════════════════════

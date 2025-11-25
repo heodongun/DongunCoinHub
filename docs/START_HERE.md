@@ -89,7 +89,7 @@ NEXT_PUBLIC_CHAIN_ID=11155111
 cd ..
 
 # 실행 스크립트 사용 (권장)
-./run.sh
+./scripts/run.sh
 
 # 또는 Docker Compose 직접 사용
 docker-compose up -d
@@ -125,7 +125,7 @@ docker-compose up -d
 ### 이미 설정 완료?
 ```bash
 # 간단 실행
-./run.sh
+./scripts/run.sh
 
 # 또는
 docker-compose up -d
@@ -143,7 +143,7 @@ docker-compose up -d
 - [ ] **컨트랙트 주소 복사**
 - [ ] **backend/.env 설정** (NFT_CONTRACT_ADDRESS)
 - [ ] **frontend/.env.local 설정** (NFT_CONTRACT_ADDRESS)
-- [ ] **시스템 실행** (`./run.sh` 또는 `docker-compose up -d`)
+- [ ] **시스템 실행** (`./scripts/run.sh` 또는 `docker-compose up -d`)
 - [ ] **Frontend 접속** (http://localhost:3000)
 - [ ] **로그인 테스트** (test@donguncoin.com / test1234)
 
@@ -253,7 +253,7 @@ npx hardhat run scripts/deploy.js --network sepolia
 
 # 3. 실행!
 cd ..
-./run.sh
+./scripts/run.sh
 ```
 
 **접속:** http://localhost:3000

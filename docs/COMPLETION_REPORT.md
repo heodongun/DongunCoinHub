@@ -182,8 +182,8 @@
 - [x] Health Checks
 
 #### 2. Scripts & Automation
-- [x] setup.sh - 자동 설정 스크립트
-- [x] test.sh - 통합 테스트 스크립트 (18개 테스트)
+- [x] scripts/setup.sh - 자동 설정 스크립트
+- [x] scripts/test.sh - 통합 테스트 스크립트 (18개 테스트)
 - [x] Makefile - 개발 명령어 (20+ 커맨드)
 
 #### 3. Database

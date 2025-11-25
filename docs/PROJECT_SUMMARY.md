@@ -116,16 +116,16 @@
 - ✅ Hardhat Node (로컬 블록체인)
 
 **자동화 스크립트:**
-- ✅ `setup.sh` - 프로젝트 초기 설정
-- ✅ `test.sh` - 통합 테스트 (18개 테스트)
+- ✅ `scripts/setup.sh` - 프로젝트 초기 설정
+- ✅ `scripts/test.sh` - 통합 테스트 (18개 테스트)
 - ✅ `Makefile` - 빌드 및 실행 명령어
 
 **산출물:**
 - `docker-compose.yml`
 - `.env.example`
 - `Makefile` (20+ 명령어)
-- `setup.sh`
-- `test.sh`
+- `scripts/setup.sh`
+- `scripts/test.sh`
 
 ---
 
@@ -170,13 +170,22 @@
 ```
 DongunCoinHub/
 ├── README.md                          ✅ 프로젝트 문서
-├── TESTING.md                         ✅ 테스트 가이드
-├── PROJECT_SUMMARY.md                 ✅ 완성 요약 (이 파일)
+├── docs/                              ✅ 추가 문서 모음
+│   ├── PROJECT_SUMMARY.md             ✅ 완성 요약 (이 파일)
+│   ├── TESTING.md                     ✅ 테스트 가이드
+│   ├── QUICKSTART.md                  ✅ 빠른 시작 가이드
+│   ├── START_HERE.md                  ✅ 바로 시작 안내
+│   ├── DEPLOYMENT.md                  ✅ 배포 가이드
+│   ├── COMPLETION_REPORT.md           ✅ 완료 보고서
+│   ├── BACKEND_STATUS.md              ✅ 백엔드 상태
+│   └── DOCKER_READY.md                ✅ 도커 준비 상태
 ├── docker-compose.yml                 ✅ Docker 설정
 ├── .env.example                       ✅ 환경변수 템플릿
 ├── Makefile                           ✅ 빌드 명령어
-├── setup.sh                           ✅ 초기 설정 스크립트
-├── test.sh                            ✅ 통합 테스트
+├── scripts/                           ✅ 실행/테스트 스크립트
+│   ├── run.sh                         ✅ 전체 스택 실행
+│   ├── setup.sh                       ✅ 초기 설정
+│   └── test.sh                        ✅ 통합 테스트
 │
 ├── database/
 │   └── init.sql                       ✅ DB 초기화 (15개 테이블)
@@ -241,7 +250,7 @@ DongunCoinHub/
 
 ```bash
 # 1. 초기 설정
-./setup.sh
+./scripts/setup.sh
 
 # 2. 환경변수 설정
 cp .env.example .env
@@ -254,7 +263,7 @@ make up
 make logs-f
 
 # 5. 테스트 실행
-./test.sh
+./scripts/test.sh
 ```
 
 ### 2. 개별 컴포넌트 실행
@@ -440,7 +449,7 @@ cd blockchain && npm test
 ```bash
 git clone <repository>
 cd DongunCoinHub
-./setup.sh
+./scripts/setup.sh
 make up
 ```
 
