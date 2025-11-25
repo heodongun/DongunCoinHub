@@ -64,20 +64,20 @@ Sepolia Faucet 목록:
 
 ### 2.1 환경 변수 설정
 
-`blockchain/.env` 파일이 이미 있으므로 확인:
+`blockchain/.env.example`를 복사해 민감 정보를 채워주세요:
 
 ```bash
 cd blockchain
-cat .env
+cp .env.example .env
 ```
 
-내용:
+필수 항목:
 ```env
-SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/c78b7199563549a5b61637084bf8d0f1
-PRIVATE_KEY=0x79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
+PRIVATE_KEY=0xyour_deployer_private_key
+ETHERSCAN_API_KEY=your_etherscan_api_key   # 선택
+NFT_CONTRACT_ADDRESS=                      # 배포 후 입력
 ```
-
-✅ **이미 설정되어 있습니다!**
 
 ### 2.2 의존성 설치
 
@@ -149,14 +149,14 @@ cp .env.example .env
 
 ```env
 # Database Configuration
-DB_HOST=postgres
+DB_HOST=postgres                  # Docker 사용 시
 DB_PORT=5432
 DB_NAME=donguncoin_hub
 DB_USER=postgres
-DB_PASSWORD=postgres
+DB_PASSWORD=change_me_db_password
 
-# JWT Secret (프로덕션에서는 변경 필수!)
-JWT_SECRET=super-secret-jwt-key-change-this-in-production-please-use-64-chars
+# JWT Secret (프로덕션에서는 변경 필수)
+JWT_SECRET=please-change-me-64-chars
 JWT_ACCESS_EXPIRATION=900000
 JWT_REFRESH_EXPIRATION=604800000
 
@@ -165,8 +165,8 @@ COINGECKO_API_KEY=
 ETHERSCAN_API_KEY=
 
 # Blockchain Configuration
-WEB3_RPC_URL=https://sepolia.infura.io/v3/c78b7199563549a5b61637084bf8d0f1
-VAULT_PRIVATE_KEY=79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0
+WEB3_RPC_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
+VAULT_PRIVATE_KEY=your_vault_private_key_without_0x
 NFT_CONTRACT_ADDRESS=0x1234567890abcdef1234567890abcdef12345678  # ← 2.3에서 배포한 주소
 
 # Server Configuration
@@ -175,7 +175,7 @@ PORT=8080
 
 **🔥 중요:**
 - `NFT_CONTRACT_ADDRESS`: 2.3 단계에서 배포한 컨트랙트 주소로 변경
-- `VAULT_PRIVATE_KEY`: 0x 제거한 Private Key (이미 올바름)
+- `VAULT_PRIVATE_KEY`: 0x 제거한 Private Key 입력 필요
 
 ### 3.2 빌드 확인
 
@@ -485,7 +485,7 @@ https://sepolia.etherscan.io/address/0xYourVaultAddress
 3. Private Key 확인:
 ```bash
 # backend/.env
-VAULT_PRIVATE_KEY=79d055...  # 0x 제거된 형태
+VAULT_PRIVATE_KEY=your_vault_private_key_without_0x
 ```
 
 ---

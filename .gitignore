@@ -8,6 +8,9 @@ Thumbs.db
 *.swp
 *.swo
 *~
+.claude/
+.codex/
+init/
 
 # Logs
 *.log
@@ -17,6 +20,10 @@ logs/
 .env
 .env.local
 .env.*.local
+backend/.env
+frontend/.env.local
+frontend/.env.*.local
+blockchain/.env
 
 # Docker
 docker-compose.override.yml

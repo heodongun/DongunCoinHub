@@ -52,8 +52,8 @@ cd ../backend
 # ⬇️ 이 부분을 단계 1에서 복사한 주소로 변경 ⬇️
 NFT_CONTRACT_ADDRESS=0x1234567890abcdef1234567890abcdef12345678
 
-# ⬇️ Private Key (0x 제거) - 이미 올바르게 설정됨 ⬇️
-VAULT_PRIVATE_KEY=79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0
+# ⬇️ Private Key (0x 제거) - .env에만 보관 ⬇️
+VAULT_PRIVATE_KEY=your_vault_private_key_without_0x
 ```
 
 ---

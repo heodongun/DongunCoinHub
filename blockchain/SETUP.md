@@ -137,12 +137,13 @@ blockchain/
 
 ## 🔑 환경 변수 (.env)
 
-이미 설정되어 있습니다:
+샘플을 복사한 뒤 개인 키를 채워주세요:
 
 ```env
-SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/c78b7199563549a5b61637084bf8d0f1
-PRIVATE_KEY=79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
+PRIVATE_KEY=0xyour_deployer_private_key
 NFT_CONTRACT_ADDRESS=  # 배포 후 입력
+ETHERSCAN_API_KEY=     # 선택
 ```
 
 ## 💰 Sepolia ETH 받기

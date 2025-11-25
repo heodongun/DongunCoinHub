@@ -5,10 +5,12 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: donguncoin-db
+    env_file:
+      - .env
     environment:
-      POSTGRES_DB: donguncoin_hub
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB:-donguncoin_hub}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD not set}
     ports:
       - "5432:5432"
     volumes:
@@ -28,14 +30,16 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: donguncoin-backend
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: jdbc:postgresql://postgres:5432/donguncoin_hub
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: postgres
-      JWT_SECRET: donguncoin-secret-key-change-in-production
-      WEB3_RPC_URL: https://sepolia.infura.io/v3/c78b7199563549a5b61637084bf8d0f1
-      NFT_CONTRACT_ADDRESS: "0x15F2fBA7138C6151CaBBa2562134C22E9F5F5da7"
-      VAULT_PRIVATE_KEY: "79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0"
+      DATABASE_URL: ${DATABASE_URL:-jdbc:postgresql://postgres:5432/donguncoin_hub}
+      DATABASE_USER: ${DATABASE_USER:-postgres}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:?DATABASE_PASSWORD not set}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET not set}
+      WEB3_RPC_URL: ${WEB3_RPC_URL:?WEB3_RPC_URL not set}
+      NFT_CONTRACT_ADDRESS: ${NFT_CONTRACT_ADDRESS:-}
+      VAULT_PRIVATE_KEY: ${VAULT_PRIVATE_KEY:?VAULT_PRIVATE_KEY not set}
     ports:
       - "8080:8080"
     depends_on:
@@ -51,9 +55,11 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: donguncoin-frontend
+    env_file:
+      - .env
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8080
-      NEXT_PUBLIC_WS_URL: ws://localhost:8080
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8080}
+      NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-ws://localhost:8080}
     ports:
       - "3000:3000"
     depends_on:

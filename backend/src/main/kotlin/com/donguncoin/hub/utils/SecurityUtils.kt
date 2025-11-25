@@ -16,7 +16,8 @@ object PasswordUtil {
 }
 
 object JwtUtil {
-    private const val secret = "donguncoin-secret-key-change-in-production"
+    private val secret: String = System.getenv("JWT_SECRET")?.takeIf { it.isNotBlank() }
+        ?: error("JWT_SECRET must be provided in the environment")
     private const val issuer = "donguncoin-hub"
     private const val validityInMs = 900_000L // 15 minutes for access token
     private const val refreshValidityInMs = 604_800_000L // 7 days for refresh token

@@ -12,10 +12,18 @@ npm install
 
 ### 2. Configure Environment
 
-The `.env` file is already configured with your credentials:
+Copy the sample file and fill in your own keys (do not commit them):
+
+```bash
+cp .env.example .env
 ```
-SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/c78b7199563549a5b61637084bf8d0f1
-PRIVATE_KEY=79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0
+
+Required values:
+```
+SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_PROJECT_ID
+PRIVATE_KEY=0xyour_deployer_private_key
+NFT_CONTRACT_ADDRESS=      # fill after deploy
+ETHERSCAN_API_KEY=         # optional
 ```
 
 ### 3. Deploy NFT Contract

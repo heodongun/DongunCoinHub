@@ -7,9 +7,9 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 
 fun Application.configureSecurity() {
-    val jwtSecret = environment.config.propertyOrNull("jwt.secret")?.getString()
-        ?: System.getenv("JWT_SECRET")
-        ?: "donguncoin-secret-key-change-in-production"
+    val jwtSecret = environment.config.propertyOrNull("jwt.secret")?.getString()?.takeIf { it.isNotBlank() }
+        ?: System.getenv("JWT_SECRET")?.takeIf { it.isNotBlank() }
+        ?: error("JWT_SECRET must be provided via environment or application.conf")
 
     val jwtIssuer = "donguncoin-hub"
     val jwtAudience = "donguncoin-users"
