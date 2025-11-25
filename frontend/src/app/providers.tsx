@@ -8,9 +8,18 @@ import { Toaster } from 'react-hot-toast';
 import { config } from '@/lib/wagmi';
 import { useState } from 'react';
 import { ThemeProvider } from '@/components/theme-provider';
+import { AuthProvider } from '@/context/AuthContext';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000, // 1 minute
+        gcTime: 5 * 60 * 1000, // 5 minutes
+        refetchOnWindowFocus: false,
+      },
+    },
+  }));
 
   return (
     <WagmiProvider config={config}>
@@ -22,8 +31,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
             enableSystem
             disableTransitionOnChange
           >
-            {children}
-            <Toaster position="top-right" />
+            <AuthProvider>
+              {children}
+              <Toaster position="top-right" />
+            </AuthProvider>
           </ThemeProvider>
         </RainbowKitProvider>
       </QueryClientProvider>

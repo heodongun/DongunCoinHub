@@ -114,6 +114,11 @@ export const marketApi = {
     const response = await api.get<CoinTicker>(`/api/market/coins/${symbol}`);
     return response.data;
   },
+
+  createCoin: async (data: import('@/types').CreateCoinRequest): Promise<CoinTicker> => {
+    const response = await api.post<CoinTicker>('/api/market/coins', data);
+    return response.data;
+  },
 };
 
 // ============================================================================

@@ -9,14 +9,17 @@ import { formatCurrency, shortenAddress, isValidEthAddress } from '@/lib/utils';
 import toast from 'react-hot-toast';
 import { useAccount } from 'wagmi';
 import type { NFTToken, UserNFTInventory } from '@/types';
+import { useWalletNFTs } from '@/hooks/useWalletNFTs';
+import Image from 'next/image';
 
 export default function NFTPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const { address: walletAddress } = useAccount();
+  const { nfts: walletNFTs, isLoading: walletNFTsLoading } = useWalletNFTs();
 
-  const [activeTab, setActiveTab] = useState<'market' | 'my' | 'mint'>('market');
+  const [activeTab, setActiveTab] = useState<'market' | 'my' | 'mint' | 'wallet'>('market');
   const [selectedNFT, setSelectedNFT] = useState<NFTToken | null>(null);
   const [withdrawNFT, setWithdrawNFT] = useState<UserNFTInventory | null>(null);
   const [withdrawAddress, setWithdrawAddress] = useState('');
@@ -185,17 +188,15 @@ export default function NFTPage() {
         <div className="flex space-x-2 mb-6">
           <button
             onClick={() => setActiveTab('market')}
-            className={`px-6 py-3 rounded-lg font-medium transition ${
-              activeTab === 'market' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
-            }`}
+            className={`px-6 py-3 rounded-lg font-medium transition ${activeTab === 'market' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
+              }`}
           >
             NFT 마켓
           </button>
           <button
             onClick={() => setActiveTab('my')}
-            className={`px-6 py-3 rounded-lg font-medium transition ${
-              activeTab === 'my' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
-            }`}
+            className={`px-6 py-3 rounded-lg font-medium transition ${activeTab === 'my' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
+              }`}
           >
             내 NFT
           </button>
@@ -204,6 +205,13 @@ export default function NFTPage() {
             className="px-6 py-3 rounded-lg font-medium transition bg-white text-gray-700 hover:bg-gray-50"
           >
             거래 내역
+          </button>
+          <button
+            onClick={() => setActiveTab('wallet')}
+            className={`px-6 py-3 rounded-lg font-medium transition ${activeTab === 'wallet' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700'
+              }`}
+          >
+            내 지갑 NFT
           </button>
           <button
             onClick={() => setShowMintModal(true)}
@@ -222,7 +230,13 @@ export default function NFTPage() {
                   <div key={nft.id} className="bg-white rounded-lg shadow overflow-hidden">
                     <div className="aspect-square bg-gray-200 relative">
                       {nft.imageUrl ? (
-                        <img src={nft.imageUrl} alt={nft.name} className="w-full h-full object-cover" />
+                        <Image
+                          src={nft.imageUrl}
+                          alt={nft.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400">
                           <span className="text-6xl">🎨</span>
@@ -267,21 +281,26 @@ export default function NFTPage() {
                     <div key={inventory.id} className="bg-white rounded-lg shadow overflow-hidden">
                       <div className="aspect-square bg-gray-200 relative">
                         {nft.imageUrl ? (
-                          <img src={nft.imageUrl} alt={nft.name} className="w-full h-full object-cover" />
+                          <Image
+                            src={nft.imageUrl}
+                            alt={nft.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-gray-400">
                             <span className="text-6xl">🎨</span>
                           </div>
                         )}
-                        <div className="absolute top-2 right-2">
+                        <div className="absolute top-2 right-2 z-10">
                           <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              inventory.status === 'OWNED'
-                                ? 'bg-green-100 text-green-800'
-                                : inventory.status === 'WITHDRAW_REQUESTED'
-                                  ? 'bg-yellow-100 text-yellow-800'
-                                  : 'bg-gray-100 text-gray-800'
-                            }`}
+                            className={`px-3 py-1 rounded-full text-xs font-medium ${inventory.status === 'OWNED'
+                              ? 'bg-green-100 text-green-800'
+                              : inventory.status === 'WITHDRAW_REQUESTED'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-gray-100 text-gray-800'
+                              }`}
                           >
                             {inventory.status}
                           </span>
@@ -330,6 +349,58 @@ export default function NFTPage() {
                 >
                   NFT 구매하러 가기
                 </button>
+              </div>
+            )}
+          </div>
+
+        )}
+
+        {/* Wallet Tab */}
+        {activeTab === 'wallet' && (
+          <div>
+            {!walletAddress ? (
+              <div className="bg-white rounded-lg shadow p-12 text-center">
+                <p className="text-gray-500 mb-4">지갑이 연결되지 않았습니다</p>
+                <p className="text-sm text-gray-400">상단 메뉴에서 지갑을 연결해주세요</p>
+              </div>
+            ) : walletNFTsLoading ? (
+              <div className="bg-white rounded-lg shadow p-12 text-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-500">지갑에서 NFT를 불러오는 중...</p>
+              </div>
+            ) : walletNFTs.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {walletNFTs.map((nft) => (
+                  <div key={nft.tokenId} className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="aspect-square bg-gray-200 relative">
+                      {nft.imageUrl ? (
+                        <Image
+                          src={nft.imageUrl}
+                          alt={nft.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          <span className="text-6xl">🎨</span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-bold text-lg mb-2">{nft.name}</h3>
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-2">{nft.description}</p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-500">Token ID</span>
+                        <span className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">{nft.tokenId}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="bg-white rounded-lg shadow p-12 text-center">
+                <p className="text-gray-500">지갑에 NFT가 없습니다</p>
               </div>
             )}
           </div>
@@ -586,6 +657,6 @@ export default function NFTPage() {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 }

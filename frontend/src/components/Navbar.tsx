@@ -23,7 +23,7 @@ export function Navbar() {
     queryKey: ['accountSummary'],
     queryFn: accountApi.getSummary,
     enabled: isAuthenticated,
-    refetchInterval: 10000,
+    refetchInterval: 30000,
   });
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -56,10 +56,10 @@ export function Navbar() {
 
   const navigation = isAuthenticated
     ? [
-        { name: '대시보드', href: '/dashboard' },
-        { name: '거래소', href: '/market' },
-        { name: 'NFT', href: '/nft' },
-      ]
+      { name: '대시보드', href: '/dashboard' },
+      { name: '거래소', href: '/market' },
+      { name: 'NFT', href: '/nft' },
+    ]
     : [];
 
   return (
@@ -76,11 +76,10 @@ export function Navbar() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`px-3 py-2 rounded-md text-sm font-medium ${
-                      pathname === item.href
+                    className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === item.href
                         ? 'bg-blue-100 text-blue-700'
                         : 'text-gray-700 hover:bg-gray-100'
-                    }`}
+                      }`}
                   >
                     {item.name}
                   </Link>

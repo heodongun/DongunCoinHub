@@ -37,7 +37,15 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">대시보드</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">대시보드</h1>
+          <button
+            onClick={() => router.push('/dashboard/create-coin')}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors"
+          >
+            코인 만들기
+          </button>
+        </div>
 
         {/* Account Summary */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">

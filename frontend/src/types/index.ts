@@ -34,6 +34,7 @@ export interface LoginRequest {
 // Account Types
 // ============================================================================
 export interface AccountSummary {
+  nickname: string;
   baseCash: string;
   totalAssetValue: string;
   coinCount: number;
@@ -62,6 +63,14 @@ export interface CoinTicker {
   high24h: string;
   low24h: string;
   change24hPct: string;
+}
+
+export interface CreateCoinRequest {
+  symbol: string;
+  name: string;
+  chain: string;
+  contractAddress?: string;
+  iconUrl?: string;
 }
 
 // ============================================================================
