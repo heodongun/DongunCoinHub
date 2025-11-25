@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: donguncoin-db
+    environment:
+      POSTGRES_DB: donguncoin_hub
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - donguncoin-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend (Kotlin + Ktor)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: donguncoin-backend
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/donguncoin_hub
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      JWT_SECRET: donguncoin-secret-key-change-in-production
+      WEB3_RPC_URL: https://sepolia.infura.io/v3/c78b7199563549a5b61637084bf8d0f1
+      NFT_CONTRACT_ADDRESS: "0x15F2fBA7138C6151CaBBa2562134C22E9F5F5da7"
+      VAULT_PRIVATE_KEY: "79d055b74a1eaf82e26ac127bc26fab9ecd2560e1d38cec304f95306136a04c0"
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - donguncoin-network
+    restart: unless-stopped
+
+  # Frontend (Next.js)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: donguncoin-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+      NEXT_PUBLIC_WS_URL: ws://localhost:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - donguncoin-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  donguncoin-network:
+    driver: bridge
